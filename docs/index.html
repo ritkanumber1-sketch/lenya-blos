@@ -1,0 +1,959 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head><link rel="icon" href="https://emojicdn.elk.sh/🚀">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школьный Блог | Лёня и Богдан</title>
+    <style>
+        :root {
+            --bg-color: #0f0f13;
+            --text-color: #ffffff;
+            --accent-color: #00ffcc;
+            --accent-hover: #00cc99;
+            --card-bg: #1a1a24;
+            --border-color: #2a2a3d;
+            --subtitle-color: #b0b0c0;
+        }
+
+        body.light-theme {
+            --bg-color: #120826;
+            --text-color: #ffffff;
+            --accent-color: #ff00ff;
+            --accent-hover: #cc00cc;
+            --card-bg: #22123f;
+            --border-color: #4a287a;
+            --subtitle-color: #e0d0ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 40px 20px;
+            margin: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Бегущая строка новостей */
+        .marquee-container {
+            background: rgba(0, 255, 204, 0.1);
+            border-top: 1px solid var(--accent-color);
+            border-bottom: 1px solid var(--accent-color);
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+            padding: 8px 0;
+        }
+        .marquee-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+        @keyframes marquee {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* Индикатор статуса */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 255, 136, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+        }
+
+        .online-badge {
+            display: inline-block;
+            background: rgba(0, 191, 255, 0.1);
+            border: 1px solid #00bfff;
+            color: #00bfff;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-bottom: 20px;
+            margin-left: 10px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+        h1:hover {
+            color: var(--accent-hover);
+            text-shadow: 2px 2px #ff0055, -2px -2px #00ffff;
+        }
+
+        #secret-msg {
+            color: #ff00ff;
+            font-size: 1em;
+            margin-top: -15px;
+            margin-bottom: 25px;
+            display: none;
+            font-weight: bold;
+        }
+        .subtitle {
+            color: var(--subtitle-color);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .channel-quote {
+            color: var(--accent-color);
+            font-style: italic;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .history-badge {
+            display: inline-block;
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px dashed var(--accent-color);
+            color: var(--accent-color);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            margin-bottom: 35px;
+        }
+
+        /* Мем-звуковая панель */
+        .sound-section {
+            background: var(--card-bg);
+            border: 1px solid #00bfff;
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .sound-section h3 {
+            color: #00bfff;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+        .sound-btn {
+            background: #00bfff;
+            color: #0f0f13;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .sound-btn:hover {
+            background: #009acd;
+            transform: scale(1.05);
+        }
+
+        /* Мини-игра «Поймай Лайк» */
+        .minigame-section {
+            background: var(--card-bg);
+            border: 1px solid #00ff88;
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .minigame-section h3 {
+            color: #00ff88;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .game-arena {
+            background: #0f0f13;
+            border: 2px dashed #00ff88;
+            height: 120px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+            margin-bottom: 12px;
+        }
+        #game-target {
+            position: absolute;
+            font-size: 2em;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.1s;
+        }
+        .game-stats {
+            color: var(--subtitle-color);
+            font-size: 0.95em;
+        }
+
+        /* Блок авторов */
+        .creators {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px 30px;
+            border-radius: 12px;
+            width: 220px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        .card h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+        }
+        #creator-info {
+            color: #00ff88;
+            font-size: 0.95em;
+            font-weight: bold;
+            margin-bottom: 35px;
+            min-height: 25px;
+        }
+
+        /* Генератор идей */
+        .idea-section {
+            background: var(--card-bg);
+            border: 1px solid #ff00ff;
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .idea-section h3 {
+            color: #ff00ff;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        #idea-box {
+            background: rgba(255, 0, 255, 0.1);
+            border: 1px dashed #ff00ff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            color: #ffffff;
+            font-style: italic;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .idea-btn {
+            background: #ff00ff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .idea-btn:hover {
+            background: #cc00cc;
+            transform: scale(1.05);
+        }
+
+        /* Симулятор монтажа */
+        .clicker-section {
+            background: var(--card-bg);
+            border: 1px solid #ffcc00;
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .clicker-section h3 {
+            color: #ffcc00;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .clicker-btn {
+            background: #ffcc00;
+            color: #0f0f13;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .clicker-btn:hover {
+            background: #e6b800;
+            transform: scale(1.05);
+        }
+        #clicker-stats {
+            margin-top: 10px;
+            color: var(--subtitle-color);
+            font-size: 0.9em;
+        }
+
+        /* Достижения */
+        .achievements-section {
+            max-width: 520px;
+            margin: 0 auto 35px auto;
+        }
+        .achievements-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 12px;
+        }
+        .achievements-grid {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .achievement-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 140px;
+            font-size: 0.9em;
+        }
+        .achievement-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        #achievement-info {
+            margin-top: 10px;
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 0.9em;
+            min-height: 20px;
+        }
+
+        .gear-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .gear-section h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        .gear-section p {
+            margin: 0;
+            color: var(--subtitle-color);
+            font-size: 0.95em;
+        }
+
+        /* Опрос */
+        .poll-section {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .poll-section h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .poll-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .poll-btn {
+            background: var(--border-color);
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .poll-btn:hover {
+            background: var(--accent-color);
+            color: #0f0f13;
+        }
+        #poll-result {
+            margin-top: 12px;
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        /* Гостевая книга */
+        .guestbook-section {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .guestbook-section h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+        .guestbook-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-direction: column;
+        }
+        .guestbook-input {
+            background: var(--border-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+        .guestbook-input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        .guestbook-submit {
+            background: var(--accent-color);
+            color: #0f0f13;
+            border: none;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .guestbook-submit:hover {
+            background: var(--accent-hover);
+        }
+        #comments-list {
+            text-align: left;
+            max-height: 150px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .comment-item {
+            background: var(--border-color);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+        .comment-author {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Реакции */
+        .reactions-section {
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+        }
+        .reactions-section h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .reaction-btns {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .react-btn {
+            background: var(--border-color);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 1.1em;
+            transition: 0.2s;
+        }
+        .react-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            padding: 15px 20px;
+            border-radius: 12px;
+            width: 160px;
+        }
+        .stat-box h2 {
+            color: var(--accent-color);
+            margin: 0 0 5px 0;
+            font-size: 1.8em;
+        }
+        .stat-box p {
+            margin: 0;
+            color: var(--subtitle-color);
+            font-size: 0.85em;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        a, button.interactive-btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #0f0f13;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1em;
+            transition: 0.2s;
+        }
+        a:hover, button.interactive-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+        .donate-btn { background: #ffcc00 !important; color: #0f0f13 !important; }
+        .donate-btn:hover { background: #e6b800 !important; }
+        .share-btn { background: #ff007f !important; color: #ffffff !important; }
+        .share-btn:hover { background: #e60073 !important; }
+        .random-btn { background: #00bfff !important; color: #0f0f13 !important; }
+        .random-btn:hover { background: #009acd !important; }
+        .shorts-btn { background: #ff0000 !important; color: #ffffff !important; }
+        .shorts-btn:hover { background: #cc0000 !important; }
+        .theme-btn { background: #9933ff !important; color: #ffffff !important; }
+        .theme-btn:hover { background: #7a1fe0 !important; }
+        .mood-btn { background: #ff6600 !important; color: #ffffff !important; }
+        .mood-btn:hover { background: #e05500 !important; }
+
+        footer {
+            margin-top: 50px;
+            color: #666680;
+            font-size: 0.9em;
+        }
+    </style>
+</head><meta name="description" content="Официальный сайт школьного влог-проекта Лёни и Богдана. Смотри влоги, играй и подписывайся!">
+<body><button onclick="scrollToTop()" id="top-btn" title="Наверх" style="display:none; position: fixed; bottom: 20px; right: 20px; background: var(--accent-color); color: #0f0f13; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1.2em; z-index: 999; transition: 0.2s;">⬆</button>
+
+    <script>
+        // Логика появления и работы кнопки «Наверх»
+        window.onscroll = function() {
+            let btn = document.getElementById("top-btn");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+    <div class="marquee-container">
+        <div class="marquee-text">📢 Внимание! Скоро выходит новый супер-влог от Лёни и Богдана! Подписывайтесь на YouTube и TikTok! 🔥</div>
+    </div>
+
+    <div>
+        <div class="status-badge" onclick="cycleStatus()" title="Нажми, чтобы сменить статус!">
+            <div class="pulse-dot" id="status-dot"></div>
+            <span id="status-text">Статус: монтируем новую серию!</span>
+        </div>
+        <div class="online-badge">
+            👀 <span id="online-count">14</span> на сайте
+        </div>
+    </div>
+
+    <h1 id="main-title" onclick="showSecret()">🚀 Наш школьный блог</h1>
+    <div id="secret-msg">🎉 Поздравляем! Ты нашёл секретную пасхалку от Лёни и Богдана! Вы лучшие! 🔥</div>
+
+    <p class="subtitle">Снимаем самую крутую жизнь 5-го класса на камеры Insta360!</p>
+
+    <div class="channel-quote">
+        «Живём на полную катушку и снимаем каждый день!»
+    </div>
+
+    <div class="history-badge">
+        📅 2022–2026 — школьный проект Лёни и Богдана
+    </div>
+
+    <div class="sound-section">
+        <h3>🔊 Мем-панель звуков</h3>
+        <button class="sound-btn" onclick="playAirhorn()">📢 Включить Airhorn / Сигнал</button>
+    </div>
+
+    <div class="minigame-section">
+        <h3>🎮 Аркада: Поймай Лайк!</h3>
+        <div class="game-arena" id="game-arena">
+            <div id="game-target" onclick="catchLike()">❤️</div>
+        </div>
+        <div class="game-stats">Поймано сердечек: <span id="score-count">0</span> | Кликни по сердечку в рамке!</div>
+    </div>
+
+    <div class="creators">
+        <div class="card" onclick="showCreator(1)">
+            <h3>Лёня</h3>
+            <p>Главный создатель и продюсер</p>
+        </div>
+        <div class="card" onclick="showCreator(2)">
+            <h3>Богдан</h3>
+            <p>Соавтор и второй оператор</p>
+        </div>
+    </div>
+    <div id="creator-info">👇 Нажми на карточку автора, чтобы узнать его секрет!</div>
+
+    <div class="idea-section">
+        <h3>💡 Генератор идей для влога</h3>
+        <div id="idea-box">Нажми кнопку ниже, чтобы получить крутую идею для новой серии!</div>
+        <button class="idea-btn" onclick="generateIdea()">🎲 Придумать идею ролика</button>
+    </div>
+
+    <div class="clicker-section">
+        <h3>🎬 Симулятор монтажа влогов</h3>
+        <button class="clicker-btn" onclick="montageClick()">🖥️ Смонтировать кадр</button>
+        <div id="clicker-stats">Отремонтировано кадров: <span id="frame-count">0</span> | Уровень: <span id="editor-level">Новичок 🟢</span></div>
+    </div>
+
+    <div class="achievements-section">
+        <h3>🏆 Наши достижения (кликни!)</h3>
+        <div class="achievements-grid">
+            <div class="achievement-card" onclick="showAchievement(1)">🎓 5 класс</div>
+            <div class="achievement-card" onclick="showAchievement(2)">🎥 Insta360 PRO</div>
+            <div class="achievement-card" onclick="showAchievement(3)">🔥 1900+ в TikTok</div>
+        </div>
+        <div id="achievement-info"></div>
+    </div>
+
+    <div class="gear-section">
+        <h3>🎥 Наше оборудование и сетап</h3>
+        <p>Используем экшн-камеры <strong>Insta360</strong> для ультра-плавных кадров, мощный софт для монтажа и крутой позитив каждый день!</p>
+    </div>
+
+    <div class="poll-section">
+        <h3>📊 Что снимать чаще?</h3>
+        <div class="poll-btns">
+            <button class="poll-btn" onclick="vote('Влоги из школы')">🏫 Влоги из школы</button>
+            <button class="poll-btn" onclick="vote('Челленджи')">🔥 Челленджи</button>
+            <button class="poll-btn" onclick="vote('Игры и распаковки')">🎮 Игры / Распаковки</button>
+        </div>
+        <div id="poll-result"></div>
+    </div>
+
+    <div class="guestbook-section">
+        <h3>💬 Стена зрителей</h3>
+        <div class="guestbook-form">
+            <input type="text" id="commenter-name" class="guestbook-input" placeholder="Твое имя...">
+            <input type="text" id="commenter-text" class="guestbook-input" placeholder="Оставь классный коммент...">
+            <button class="guestbook-submit" onclick="addComment()">Отправить на стену</button>
+        </div>
+        <div id="comments-list">
+            <div class="comment-item"><span class="comment-author">Сергей:</span> Сайт просто огонь, жду новый влог! 🔥</div>
+            <div class="comment-item"><span class="comment-author">Милана:</span> Лёня и Богдан лучшие ютуберы! 🎬</div>
+        </div>
+    </div>
+
+    <div class="reactions-section">
+        <h3>❤️ Оставь реакцию каналу</h3>
+        <div class="reaction-btns">
+            <button class="react-btn" onclick="react('🔥')">🔥 <span id="cnt-fire">12</span></button>
+            <button class="react-btn" onclick="react('👍')">👍 <span id="cnt-thumb">8</span></button>
+            <button class="react-btn" onclick="react('🤩')">🤩 <span id="cnt-wow">15</span></button>
+            <button class="react-btn" onclick="react('❤️')">❤️ <span id="cnt-heart">22</span></button>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-box">
+            <h2 id="yt-count">0</h2>
+            <p>YouTube подписчиков</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="tt-count">0</h2>
+            <p>TikTok подписчиков</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="likes-count">0</h2>
+            <p>Лайков в TikTok</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="following-count">0</h2>
+            <p>Подписок</p>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <a href="https://www.youtube.com/@RockyLenya" target="_blank">YouTube канал</a>
+        <a href="https://www.tiktok.com/@topa_leka" target="_blank">TikTok</a>
+        <a href="https://www.donationalerts.com/r/zaqkfs" target="_blank" class="donate-btn">💰 Поддержать донатом</a>
+        <button class="interactive-btn random-btn" onclick="openRandomVideo()">🎲 Случайное видео</button>
+        <button class="interactive-btn shorts-btn" onclick="openRandomShorts()">⚡ Случайный Shorts</button>
+        <button class="interactive-btn theme-btn" onclick="toggleTheme()">🎨 Сменить тему</button>
+        <button class="interactive-btn mood-btn" onclick="randomizeMood()">🌈 Цвет настроения</button>
+        <button class="interactive-btn share-btn" onclick="shareSite()">🔗 Поделиться сайтом</button>
+    </div>
+
+    <footer>
+        <p>© 2022-2026 | Школьный проект Лёни и Богдана</p>
+    </footer>
+
+    <script>
+        function animateValue(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let range = end - start;
+            let current = start;
+            let increment = end > start ? Math.ceil(range / 50) : -1;
+            let stepTime = Math.abs(Math.floor(duration / 50));
+            let timer = setInterval(function() {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                obj.innerHTML = current;
+            }, stepTime);
+        }
+
+        animateValue("yt-count", 0, 82, 1200);
+        animateValue("tt-count", 0, 1916, 1500);
+        animateValue("likes-count", 0, 1995, 1500);
+        animateValue("following-count", 0, 6560, 2000);
+
+        // Генератор звука Airhorn через Web Audio API
+        function playAirhorn() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(554.37, audioCtx.currentTime + 0.1);
+                
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } catch (e) {
+                alert("Звук активирован!");
+            }
+        }
+
+        // Рандомайзатор цвета акцента
+        function randomizeMood() {
+            const colors = ['#00ffcc', '#ff0055', '#ffcc00', '#00bfff', '#9933ff', '#ff6600'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.documentElement.style.setProperty('--accent-color', randomColor);
+        }
+
+        const statuses = [
+            { text: "Статус: монтируем новую серию!", color: "#00ff88" },
+            { text: "Статус: снимаем влог в школе!", color: "#ff0055" },
+            { text: "Статус: отдыхаем и играем в Brawl Stars!", color: "#00bfff" }
+        ];
+        let statusIndex = 0;
+        function cycleStatus() {
+            statusIndex = (statusIndex + 1) % statuses.length;
+            document.getElementById("status-text").innerHTML = statuses[statusIndex].text;
+            document.getElementById("status-dot").style.backgroundColor = statuses[statusIndex].color;
+        }
+
+        let score = 0;
+        function moveTarget() {
+            let arena = document.getElementById("game-arena");
+            let target = document.getElementById("game-target");
+            let maxX = arena.clientWidth - 40;
+            let maxY = arena.clientHeight - 40;
+            let randomX = Math.floor(Math.random() * maxX);
+            let randomY = Math.floor(Math.random() * maxY);
+            target.style.left = randomX + "px";
+            target.style.top = randomY + "px";
+        }
+        function catchLike() {
+            score++;
+            document.getElementById("score-count").innerHTML = score;
+            moveTarget();
+        }
+        setInterval(moveTarget, 1500);
+        moveTarget();
+
+        setInterval(() => {
+            let onlineElem = document.getElementById("online-count");
+            let randomChange = Math.floor(Math.random() * 5) - 2;
+            let currentVal = parseInt(onlineElem.innerHTML) + randomChange;
+            if (currentVal < 8) currentVal = 11;
+            onlineElem.innerHTML = currentVal;
+        }, 5000);
+
+        const ideas = [
+            "⚡ Прожить целый день в школе на камеры Insta360 без слов!",
+            "🔥 Челлендж: Снять все перемены за 5 минут до звонка.",
+            "🎮 Показать закулисье создания игр и монтажа влогов.",
+            "🏫 Обзор школьного портфеля: что там прячут Лёня и Богдан?",
+            "🏆 Спортивный челлендж на физкультуре с экшн-камерой!"
+        ];
+        function generateIdea() {
+            let randomIndex = Math.floor(Math.random() * ideas.length);
+            document.getElementById("idea-box").innerHTML = ideas[randomIndex];
+        }
+
+        function showCreator(num) {
+            let info = document.getElementById("creator-info");
+            if (num === 1) {
+                info.innerHTML = "💡 Лёня: Придумал идею блога, отвечает за сценарии и монтаж шедевров!";
+            } else {
+                info.innerHTML = "⚡ Богдан: Мастер классных кадров, второй оператор и главный генератор фана!";
+            }
+        }
+
+        let frames = 0;
+        function montageClick() {
+            frames++;
+            document.getElementById("frame-count").innerHTML = frames;
+            let lvlElem = document.getElementById("editor-level");
+            if (frames < 10) lvlElem.innerHTML = "Новичок 🟢";
+            else if (frames < 25) lvlElem.innerHTML = "Монтажёр 🟡";
+            else if (frames < 50) lvlElem.innerHTML = "Профи вовсю 🔥";
+            else lvlElem.innerHTML = "Кинорежиссёр высшей лиги 👑";
+        }
+
+        function showAchievement(id) {
+            let info = document.getElementById("achievement-info");
+            if (id === 1) info.innerHTML = "✨ Разблокировано: Переход в 5 класс и новые крутые влоги!";
+            else if (id === 2) info.innerHTML = "🎥 Разблокировано: Профессиональный уровень съёмки на камеры Insta360!";
+            else if (id === 3) info.innerHTML = "🚀 Разблокировано: Покорили отметку почти в 2000 подписчиков в TikTok!";
+        }
+
+        function addComment() {
+            let nameInput = document.getElementById("commenter-name").value.trim();
+            let textInput = document.getElementById("commenter-text").value.trim();
+            if (nameInput === "" || textInput === "") {
+                alert("Заполни оба поля, чтобы оставить комментарий!");
+                return;
+            }
+            let list = document.getElementById("comments-list");
+            let newDiv = document.createElement("div");
+            newDiv.className = "comment-item";
+            newDiv.innerHTML = `<span class="comment-author">${nameInput}:</span> ${textInput}`;
+            list.prepend(newDiv);
+            document.getElementById("commenter-name").value = "";
+            document.getElementById("commenter-text").value = "";
+        }
+
+        let counts = { '🔥': 12, '👍': 8, '🤩': 15, '❤️': 22 };
+        function react(emoji) {
+            counts[emoji]++;
+            if (emoji === '🔥') document.getElementById('cnt-fire').innerHTML = counts[emoji];
+            if (emoji === '👍') document.getElementById('cnt-thumb').innerHTML = counts[emoji];
+            if (emoji === '🤩') document.getElementById('cnt-wow').innerHTML = counts[emoji];
+            if (emoji === '❤️') document.getElementById('cnt-heart').innerHTML = counts[emoji];
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle("light-theme");
+        }
+
+        function showSecret() {
+            let msg = document.getElementById("secret-msg");
+            msg.style.display = (msg.style.display === "block") ? "none" : "block";
+        }
+
+        function shareSite() {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                alert("Ссылка на сайт скопирована в буфер обмена! Перешли её друзьям.");
+            });
+        }
+
+        function vote(option) {
+            document.getElementById("poll-result").innerHTML = "Спасибо за голос за вариант: «" + option + "»! Выбор принят! 🔥";
+        }
+
+        const myVideos = [
+            "https://youtu.be/kl95K2X7t9k", "https://youtu.be/6InBdkRmkb8", "https://youtu.be/O2buhvgpqfo",
+            "https://youtu.be/D2-BMg_GrZ0", "https://youtu.be/h0s4uysCPEg", "https://youtu.be/tLG-NGqpOoE",
+            "https://youtu.be/MiZN_2TLflg", "https://youtu.be/eLiN5Zp72tk", "https://youtu.be/CS86TkBs5Q4",
+            "https://youtu.be/kSmoBzCtYBk", "https://youtu.be/AO-XBPAJvWI", "https://youtu.be/iEe8R-nB_Zc"
+        ];
+
+        const myShorts = [
+            "https://youtube.com/shorts/EuprlrOMFkg", "https://youtube.com/shorts/GIdSZ29BUvw",
+            "https://youtube.com/shorts/enBsYk3EfcY", "https://youtube.com/shorts/vxTOYYEGJgw",
+            "https://youtube.com/shorts/DDRStaGL93c", "https://youtube.com/shorts/_5_8GOCSeNs"
+        ];
+
+        function openRandomVideo() {
+            window.open(myVideos[Math.floor(Math.random() * myVideos.length)], "_blank");
+        }
+
+        function openRandomShorts() {
+            window.open(myShorts[Math.floor(Math.random() * myShorts.length)], "_blank");
+        }
+    </script>
+</body>
+</html><div class="music-section">
+        <h3>🎵 Фоновый вайб (Instasamka)</h3>
+        <p>Включи музыку для полного погружения в атмосферу влога!</p>
+        <button class="interactive-btn music-btn" id="music-toggle-btn" onclick="toggleMusic()">▶ Включить трек</button>
+        <div id="audio-container" style="display: none;">
+            <iframe width="0" height="0" src="https://www.youtube.com/embed/328m07x3g_I?autoplay=1&loop=1&playlist=328m07x3g_I" title="Instasamka Background Music" allow="autoplay"></iframe>
+        </div>
+    </div><button class="interactive-btn" onclick="toggleMatrixMode()" style="background: #00ff00 !important; color: #000 !important;">💻 Режим хакера</button>
+	<button class="interactive-btn" onclick="toggleMatrixMode()" style="background: #00ff00 !important; color: #000 !important;">💻 Режим хакера</button>
