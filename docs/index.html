@@ -1,18 +1,19 @@
-﻿<!DOCTYPE html>
+﻿<<!DOCTYPE html>
 <html lang="ru">
-<head><link rel="icon" href="https://emojicdn.elk.sh/🚀">
+<head>
+    <link rel="icon" href="https://emojicdn.elk.sh/🚀">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школьный Блог | Лёня и Богдан</title>
+    <title>Школьный Блог v2.1 | Лёня и Богдан</title>
     <style>
         :root {
-            --bg-color: #0f0f13;
+            --bg-color: #0b0b10;
             --text-color: #ffffff;
             --accent-color: #00ffcc;
             --accent-hover: #00cc99;
-            --card-bg: #1a1a24;
-            --border-color: #2a2a3d;
-            --subtitle-color: #b0b0c0;
+            --card-bg: #151520;
+            --border-color: #252538;
+            --subtitle-color: #a0a0b5;
         }
 
         body.light-theme {
@@ -33,9 +34,9 @@
             padding: 40px 20px;
             margin: 0;
             transition: background 0.3s, color 0.3s;
+            position: relative;
         }
 
-        /* Бегущая строка новостей */
         .marquee-container {
             background: rgba(0, 255, 204, 0.1);
             border-top: 1px solid var(--accent-color);
@@ -59,7 +60,6 @@
             100% { transform: translate(-100%, 0); }
         }
 
-        /* Индикатор статуса */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -142,7 +142,20 @@
             margin-bottom: 35px;
         }
 
-        /* Мем-звуковая панель */
+        .extra-feature-section {
+            background: var(--card-bg);
+            border: 1px solid #ff00ff;
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .extra-feature-section h3 {
+            color: #ff00ff;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
         .sound-section {
             background: var(--card-bg);
             border: 1px solid #00bfff;
@@ -173,7 +186,6 @@
             transform: scale(1.05);
         }
 
-        /* Мини-игра «Поймай Лайк» */
         .minigame-section {
             background: var(--card-bg);
             border: 1px solid #00ff88;
@@ -209,7 +221,37 @@
             font-size: 0.95em;
         }
 
-        /* Блок авторов */
+        .minigame-section-2 {
+            background: var(--card-bg);
+            border: 1px solid #ffcc00;
+            max-width: 480px;
+            margin: 0 auto 35px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .minigame-section-2 h3 {
+            color: #ffcc00;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .game-arena-2 {
+            background: #0f0f13;
+            border: 2px dashed #ffcc00;
+            height: 120px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+            margin-bottom: 12px;
+        }
+        #game-target-2 {
+            position: absolute;
+            font-size: 2em;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.1s;
+        }
+
         .creators {
             display: flex;
             justify-content: center;
@@ -242,7 +284,6 @@
             min-height: 25px;
         }
 
-        /* Генератор идей */
         .idea-section {
             background: var(--card-bg);
             border: 1px solid #ff00ff;
@@ -286,7 +327,6 @@
             transform: scale(1.05);
         }
 
-        /* Симулятор монтажа */
         .clicker-section {
             background: var(--card-bg);
             border: 1px solid #ffcc00;
@@ -322,7 +362,6 @@
             font-size: 0.9em;
         }
 
-        /* Достижения */
         .achievements-section {
             max-width: 520px;
             margin: 0 auto 35px auto;
@@ -378,7 +417,6 @@
             font-size: 0.95em;
         }
 
-        /* Опрос */
         .poll-section {
             background: var(--card-bg);
             border: 1px solid var(--accent-color);
@@ -419,7 +457,6 @@
             font-size: 0.95em;
         }
 
-        /* Гостевая книга */
         .guestbook-section {
             background: var(--card-bg);
             border: 1px solid var(--accent-color);
@@ -483,7 +520,6 @@
             font-weight: bold;
         }
 
-        /* Реакции */
         .reactions-section {
             max-width: 480px;
             margin: 0 auto 35px auto;
@@ -580,18 +616,33 @@
         .theme-btn:hover { background: #7a1fe0 !important; }
         .mood-btn { background: #ff6600 !important; color: #ffffff !important; }
         .mood-btn:hover { background: #e05500 !important; }
+        .firework-btn { background: #00ff88 !important; color: #0f0f13 !important; }
+        .firework-btn:hover { background: #00cc6a !important; }
 
         footer {
             margin-top: 50px;
             color: #666680;
             font-size: 0.9em;
         }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-500px) scale(2); opacity: 0; }
+        }
+        .particle {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            animation: floatUp 1.2s ease-out forwards;
+            z-index: 9999;
+        }
     </style>
-</head><meta name="description" content="Официальный сайт школьного влог-проекта Лёни и Богдана. Смотри влоги, играй и подписывайся!">
-<body><button onclick="scrollToTop()" id="top-btn" title="Наверх" style="display:none; position: fixed; bottom: 20px; right: 20px; background: var(--accent-color); color: #0f0f13; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1.2em; z-index: 999; transition: 0.2s;">⬆</button>
+    <meta name="description" content="Официальный сайт школьного влог-проекта Лёни и Богдана. Версия 2.1!">
+</head>
+<body>
+    <button onclick="scrollToTop()" id="top-btn" title="Наверх" style="display:none; position: fixed; bottom: 20px; right: 20px; background: var(--accent-color); color: #0f0f13; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1.2em; z-index: 999; transition: 0.2s;">⬆</button>
 
     <script>
-        // Логика появления и работы кнопки «Наверх»
         window.onscroll = function() {
             let btn = document.getElementById("top-btn");
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -606,21 +657,21 @@
     </script>
 
     <div class="marquee-container">
-        <div class="marquee-text">📢 Внимание! Скоро выходит новый супер-влог от Лёни и Богдана! Подписывайтесь на YouTube и TikTok! 🔥</div>
+        <div class="marquee-text">🚀 ВЕРСИЯ 2.1 ЗАПУЩЕНА! Всё сохраняется в памяти браузера, Макаров Плейс (Ozon) и крутая музыка! 🔥</div>
     </div>
 
     <div>
         <div class="status-badge" onclick="cycleStatus()" title="Нажми, чтобы сменить статус!">
             <div class="pulse-dot" id="status-dot"></div>
-            <span id="status-text">Статус: монтируем новую серию!</span>
+            <span id="status-text">Статус: релиз версии 2.1! 🎉</span>
         </div>
         <div class="online-badge">
-            👀 <span id="online-count">14</span> на сайте
+            👀 <span id="online-count">18</span> на сайте
         </div>
     </div>
 
-    <h1 id="main-title" onclick="showSecret()">🚀 Наш школьный блог</h1>
-    <div id="secret-msg">🎉 Поздравляем! Ты нашёл секретную пасхалку от Лёни и Богдана! Вы лучшие! 🔥</div>
+    <h1 id="main-title" onclick="showSecret()">🚀 Наш школьный блог v2.1</h1>
+    <div id="secret-msg">🎉 Поздравляем! Ты нашёл секретную пасхалку в версии 2.1! Вы лучшие! 🔥</div>
 
     <p class="subtitle">Снимаем самую крутую жизнь 5-го класса на камеры Insta360!</p>
 
@@ -629,7 +680,62 @@
     </div>
 
     <div class="history-badge">
-        📅 2022–2026 — школьный проект Лёни и Богдана
+        📅 2022–2026 — школьный проект Лёни и Богдана (v2.1)
+    </div>
+
+    <div class="extra-feature-section">
+        <h3>⏳ До летних каникул осталось:</h3>
+        <p id="vacation-countdown" style="font-size: 1.5em; font-weight: bold; color: var(--accent-color); margin: 10px 0 0 0;">Загрузка...</p>
+    </div>
+
+    <!-- БЛОК: МАКАРОВ ПЛЕЙС (OZON) С ССЫЛКОЙ -->
+    <div class="extra-feature-section" style="border-color: #005bff;">
+        <h3 style="color: #005bff;">📦 Макаров Плейс (Ozon)</h3>
+        <p style="font-size: 1em; color: var(--text-color); margin-bottom: 12px; font-weight: bold;">Официальная точка притяжения и заказов!</p>
+        <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
+            <a href="https://www.ozon.com" target="_blank" class="poll-btn" style="background: #005bff; color: #fff; text-decoration: none; display: inline-block; padding: 8px 15px; border-radius: 6px;">Перейти на Ozon 🌐</a>
+            <button class="poll-btn" onclick="trackOrder(1)">📦 Статус заказа</button>
+            <button class="poll-btn" onclick="trackOrder(2)">🏃‍♂️ Бежать в ПВЗ</button>
+        </div>
+        <p id="ozon-result" style="margin-top: 10px; font-weight: bold; min-height: 20px; font-size: 0.9em;"></p>
+    </div>
+
+    <div class="extra-feature-section">
+        <h3>🎮 Статус: во что играем прямо сейчас</h3>
+        <p id="current-game-display" style="font-size: 1.1em; color: #ffcc00; font-weight: bold; margin-bottom: 12px;">Brawl Stars (апаем кубки! 🏆)</p>
+        <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
+            <button class="poll-btn" onclick="setGame('Brawl Stars (🏆)')">Brawl Stars</button>
+            <button class="poll-btn" onclick="setGame('Roblox Studio (💻)')">Roblox Studio</button>
+            <button class="poll-btn" onclick="setGame('Minecraft (⛏️)')">Minecraft</button>
+            <button class="poll-btn" onclick="setGame('Genshin Impact (✨)')">Genshin Impact</button>
+        </div>
+    </div>
+
+    <div class="extra-feature-section">
+        <h3>❓ Мини-квиз: Насколько хорошо ты знаешь наш блог?</h3>
+        <p id="quiz-question" style="font-size: 1em; margin-bottom: 15px; color: var(--subtitle-color);">На какую камеру мы снимаем наши влоги?</p>
+        <div id="quiz-options" style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="poll-btn" onclick="checkQuiz(false)">Смартфон на палке</button>
+            <button class="poll-btn" onclick="checkQuiz(true)">Экшн-камера Insta360 📷</button>
+            <button class="poll-btn" onclick="checkQuiz(false)">Профессиональный дрон</button>
+        </div>
+        <p id="quiz-result" style="margin-top: 12px; font-weight: bold; min-height: 20px;"></p>
+    </div>
+
+    <div class="extra-feature-section" style="border-color: #ff0055;">
+        <h3 style="color: #ff0055;">🔋 Мини-игра: Зарядка телефона</h3>
+        <p id="battery-status" style="font-size: 1.5em; font-weight: bold; color: #ff0055; margin: 5px 0;">⚡ 10%</p>
+        <button class="idea-btn" style="background: #ff0055;" onclick="boostBattery()">ЖМИ БЫСТРЕЕ! 🚀</button>
+    </div>
+
+    <div class="extra-feature-section" style="border-color: #ffcc00;">
+        <h3 style="color: #ffcc00;">✊ Камень, ножницы, бумага</h3>
+        <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 8px;">
+            <button class="poll-btn" onclick="playRPS('камень')">🪨 Камень</button>
+            <button class="poll-btn" onclick="playRPS('ножницы')">✂️ Ножницы</button>
+            <button class="poll-btn" onclick="playRPS('бумага')">📄 Бумага</button>
+        </div>
+        <p id="rps-result" style="font-weight: bold; min-height: 20px; color: var(--subtitle-color); font-size: 0.9em;">Сделай свой выбор против бота!</p>
     </div>
 
     <div class="sound-section">
@@ -638,11 +744,19 @@
     </div>
 
     <div class="minigame-section">
-        <h3>🎮 Аркада: Поймай Лайк!</h3>
+        <h3>🎮 Аркада 1: Поймай Лайк!</h3>
         <div class="game-arena" id="game-arena">
             <div id="game-target" onclick="catchLike()">❤️</div>
         </div>
-        <div class="game-stats">Поймано сердечек: <span id="score-count">0</span> | Кликни по сердечку в рамке!</div>
+        <div class="game-stats">Поймано сердечек: <span id="score-count">0</span></div>
+    </div>
+
+    <div class="minigame-section-2">
+        <h3>📸 Аркада 2: Поймай Insta360!</h3>
+        <div class="game-arena-2" id="game-arena-2">
+            <div id="game-target-2" onclick="catchCamera()">📷</div>
+        </div>
+        <div class="game-stats">Снято кадров на экшн-камеру: <span id="score-count-2">0</span></div>
     </div>
 
     <div class="creators">
@@ -702,8 +816,7 @@
             <button class="guestbook-submit" onclick="addComment()">Отправить на стену</button>
         </div>
         <div id="comments-list">
-            <div class="comment-item"><span class="comment-author">Сергей:</span> Сайт просто огонь, жду новый влог! 🔥</div>
-            <div class="comment-item"><span class="comment-author">Милана:</span> Лёня и Богдан лучшие ютуберы! 🎬</div>
+            <!-- Сюда подгружаются комментарии из localStorage -->
         </div>
     </div>
 
@@ -740,6 +853,7 @@
         <a href="https://www.youtube.com/@RockyLenya" target="_blank">YouTube канал</a>
         <a href="https://www.tiktok.com/@topa_leka" target="_blank">TikTok</a>
         <a href="https://www.donationalerts.com/r/zaqkfs" target="_blank" class="donate-btn">💰 Поддержать донатом</a>
+        <button class="interactive-btn firework-btn" onclick="launchFireworks()">🎆 Запустить салют</button>
         <button class="interactive-btn random-btn" onclick="openRandomVideo()">🎲 Случайное видео</button>
         <button class="interactive-btn shorts-btn" onclick="openRandomShorts()">⚡ Случайный Shorts</button>
         <button class="interactive-btn theme-btn" onclick="toggleTheme()">🎨 Сменить тему</button>
@@ -747,11 +861,189 @@
         <button class="interactive-btn share-btn" onclick="shareSite()">🔗 Поделиться сайтом</button>
     </div>
 
+    <!-- Музыкальный плеер v2.1 (Три песни) -->
+    <div style="text-align: center; margin-top: 40px; padding: 20px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--accent-color); max-width: 480px; margin-left: auto; margin-right: auto;">
+        <h3 style="color: var(--accent-color); margin-top: 0;">🎧 Музыкальный плеер v2.1</h3>
+        <p style="color: var(--subtitle-color); font-size: 0.9em; margin-bottom: 15px;">Включай треки фоном и создавай вайб под новый влог!</p>
+        
+        <audio id="footballAudio" controls loop style="width: 100%; margin-bottom: 12px;">
+            <source src="zadedengi.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        
+        <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+            <button class="sound-btn" onclick="switchTrack('zadedengi.mp3', 'Трек 1: За деньги да')">🎵 Трек 1</button>
+            <button class="sound-btn" onclick="switchTrack('track2.mp3', '⚡ Трек 2: INSTASAMKA - Отключаю телефон')">⚡ Трек 2</button>
+            <button class="sound-btn" onclick="switchTrack('track3.mp3', '🔥 Трек 3')">🔥 Трек 3</button>
+        </div>
+        <p id="track-title" style="color: var(--subtitle-color); font-size: 0.85em; margin-top: 8px;">Сейчас играет: Трек 1</p>
+    </div>
+
     <footer>
-        <p>© 2022-2026 | Школьный проект Лёни и Богдана</p>
+        <p>© 2022-2026 | Школьный проект Лёни и Богдана (v2.1)</p>
     </footer>
 
     <script>
+        // Загрузка сохраненных данных при старте
+        window.addEventListener('DOMContentLoaded', () => {
+            // Тема
+            if (localStorage.getItem('saved_theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+            // Монтаж кликер
+            let savedFrames = localStorage.getItem('saved_frames');
+            if (savedFrames !== null) {
+                frames = parseInt(savedFrames);
+                document.getElementById("frame-count").innerHTML = frames;
+                updateEditorLevel(frames);
+            }
+            // Батарейка
+            let savedBattery = localStorage.getItem('saved_battery');
+            if (savedBattery !== null) {
+                batteryLevel = parseInt(savedBattery);
+                document.getElementById('battery-status').innerHTML = `⚡ ${batteryLevel}%`;
+            }
+            // Комментарии
+            let savedComments = localStorage.getItem('saved_comments');
+            if (savedComments !== null) {
+                document.getElementById("comments-list").innerHTML = savedComments;
+            } else {
+                // Стандартные комменты по умолчанию, если пусто
+                document.getElementById("comments-list").innerHTML = `
+                    <div class="comment-item"><span class="comment-author">Сергей:</span> Сайт v2.1 просто ракета! 🔥</div>
+                    <div class="comment-item"><span class="comment-author">Оля:</span> Макаров Плейс и Ozon топ идея! 📦</div>
+                `;
+            }
+            // Реакции
+            let savedReactions = localStorage.getItem('saved_reactions');
+            if (savedReactions !== null) {
+                counts = JSON.parse(savedReactions);
+                document.getElementById('cnt-fire').innerHTML = counts['🔥'];
+                document.getElementById('cnt-thumb').innerHTML = counts['👍'];
+                document.getElementById('cnt-wow').innerHTML = counts['🤩'];
+                document.getElementById('cnt-heart').innerHTML = counts['❤️'];
+            }
+        });
+
+        function updateVacationCountdown() {
+            let now = new Date();
+            let vacationDate = new Date(2027, 5, 1);
+            let diffTime = vacationDate - now;
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            let elem = document.getElementById('vacation-countdown');
+            if (diffDays > 0) {
+                elem.innerHTML = `🏖️ ${diffDays} дней до лета!`;
+            } else {
+                elem.innerHTML = `🎉 Ура, каникулы начались! 🔥`;
+            }
+        }
+        updateVacationCountdown();
+
+        function trackOrder(step) {
+            let res = document.getElementById('ozon-result');
+            if (step === 1) {
+                res.style.color = "#005bff";
+                res.innerHTML = "🚚 Заказ в пути! Машина Ozon уже везёт посылку в Макаров Плейс.";
+            } else {
+                res.style.color = "#00ff88";
+                res.innerHTML = "🎉 Заказ прибыл в ПВЗ! Вас ждёт фирменный пакет с зелёной лентой.";
+            }
+        }
+
+        function setGame(gameName) {
+            document.getElementById('current-game-display').innerHTML = gameName;
+        }
+
+        function checkQuiz(isCorrect) {
+            let res = document.getElementById('quiz-result');
+            if (isCorrect) {
+                res.style.color = "#00ff88";
+                res.innerHTML = "🎉 Абсолютно верно! Ты истинный фанат нашего канала!";
+            } else {
+                res.style.color = "#ff4444";
+                res.innerHTML = "❌ Не угадал! Попробуй ещё раз кликнуть правильный вариант.";
+            }
+        }
+
+        // Логика зарядки батареи с сохранением
+        let batteryLevel = 10;
+        function boostBattery() {
+            batteryLevel += 15;
+            if (batteryLevel >= 100) {
+                batteryLevel = 100;
+                document.getElementById('battery-status').innerHTML = "🔥 100% — ТЕЛЕФОН ЗАРЯЖЕН!";
+                localStorage.setItem('saved_battery', batteryLevel);
+                setTimeout(() => { 
+                    batteryLevel = 10; 
+                    document.getElementById('battery-status').innerHTML = `⚡ ${batteryLevel}%`;
+                    localStorage.setItem('saved_battery', batteryLevel);
+                }, 2500);
+            } else {
+                document.getElementById('battery-status').innerHTML = `⚡ ${batteryLevel}%`;
+                localStorage.setItem('saved_battery', batteryLevel);
+            }
+        }
+
+        function playRPS(playerChoice) {
+            const choices = ['камень', 'ножницы', 'бумага'];
+            const botChoice = choices[Math.floor(Math.random() * choices.length)];
+            let res = document.getElementById('rps-result');
+            let icons = { 'камень': '🪨', 'ножницы': '✂️', 'бумага': '📄' };
+            
+            if (playerChoice === botChoice) {
+                res.style.color = "#ffcc00";
+                res.innerHTML = `Ничья! У бота тоже ${icons[botChoice]}.`;
+            } else if (
+                (playerChoice === 'камень' && botChoice === 'ножницы') ||
+                (playerChoice === 'ножницы' && botChoice === 'бумага') ||
+                (playerChoice === 'бумага' && botChoice === 'камень')
+            ) {
+                res.style.color = "#00ff88";
+                res.innerHTML = `🏆 Ты победил! У бота ${icons[botChoice]}.`;
+            } else {
+                res.style.color = "#ff4444";
+                res.innerHTML = `😢 Победил бот! У него ${icons[botChoice]}.`;
+            }
+        }
+
+        function launchFireworks() {
+            const emojis = ['🎉', '🎆', '🔥', '✨', '💖', '⭐', '🚀'];
+            for (let i = 0; i < 25; i++) {
+                let particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = Math.random() * window.innerWidth + 'px';
+                particle.style.bottom = '50px';
+                particle.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
+                document.body.appendChild(particle);
+                setTimeout(() => { particle.remove(); }, 1500);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            let audio = document.getElementById('footballAudio');
+            let playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function(error) {
+                    console.log("Автозапуск поймал блок, ждем клик");
+                });
+            }
+        });
+
+        document.addEventListener('pointerdown', function() {
+            let audio = document.getElementById('footballAudio');
+            if (audio.paused) {
+                audio.play().catch(function(e) {});
+            }
+        }, { once: true });
+
+        function switchTrack(file, title) {
+            let audio = document.getElementById('footballAudio');
+            audio.src = file;
+            audio.play().catch(e => {});
+            document.getElementById('track-title').innerHTML = "Сейчас играет: " + title;
+        }
+
         function animateValue(id, start, end, duration) {
             let obj = document.getElementById(id);
             let range = end - start;
@@ -773,23 +1065,18 @@
         animateValue("likes-count", 0, 1995, 1500);
         animateValue("following-count", 0, 6560, 2000);
 
-        // Генератор звука Airhorn через Web Audio API
         function playAirhorn() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
-                
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(440, audioCtx.currentTime);
                 osc.frequency.setValueAtTime(554.37, audioCtx.currentTime + 0.1);
-                
                 gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-                
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
-                
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.4);
             } catch (e) {
@@ -797,7 +1084,6 @@
             }
         }
 
-        // Рандомайзатор цвета акцента
         function randomizeMood() {
             const colors = ['#00ffcc', '#ff0055', '#ffcc00', '#00bfff', '#9933ff', '#ff6600'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -805,7 +1091,7 @@
         }
 
         const statuses = [
-            { text: "Статус: монтируем новую серию!", color: "#00ff88" },
+            { text: "Статус: релиз версии 2.1! 🎉", color: "#00ff88" },
             { text: "Статус: снимаем влог в школе!", color: "#ff0055" },
             { text: "Статус: отдыхаем и играем в Brawl Stars!", color: "#00bfff" }
         ];
@@ -822,10 +1108,8 @@
             let target = document.getElementById("game-target");
             let maxX = arena.clientWidth - 40;
             let maxY = arena.clientHeight - 40;
-            let randomX = Math.floor(Math.random() * maxX);
-            let randomY = Math.floor(Math.random() * maxY);
-            target.style.left = randomX + "px";
-            target.style.top = randomY + "px";
+            target.style.left = Math.floor(Math.random() * maxX) + "px";
+            target.style.top = Math.floor(Math.random() * maxY) + "px";
         }
         function catchLike() {
             score++;
@@ -835,11 +1119,28 @@
         setInterval(moveTarget, 1500);
         moveTarget();
 
+        let score2 = 0;
+        function moveTarget2() {
+            let arena = document.getElementById("game-arena-2");
+            let target = document.getElementById("game-target-2");
+            let maxX = arena.clientWidth - 40;
+            let maxY = arena.clientHeight - 40;
+            target.style.left = Math.floor(Math.random() * maxX) + "px";
+            target.style.top = Math.floor(Math.random() * maxY) + "px";
+        }
+        function catchCamera() {
+            score2++;
+            document.getElementById("score-count-2").innerHTML = score2;
+            moveTarget2();
+        }
+        setInterval(moveTarget2, 1800);
+        moveTarget2();
+
         setInterval(() => {
             let onlineElem = document.getElementById("online-count");
             let randomChange = Math.floor(Math.random() * 5) - 2;
             let currentVal = parseInt(onlineElem.innerHTML) + randomChange;
-            if (currentVal < 8) currentVal = 11;
+            if (currentVal < 8) currentVal = 14;
             onlineElem.innerHTML = currentVal;
         }, 5000);
 
@@ -864,15 +1165,21 @@
             }
         }
 
+        // Симулятор монтажа с сохранением
         let frames = 0;
+        function updateEditorLevel(count) {
+            let lvlElem = document.getElementById("editor-level");
+            if (count < 10) lvlElem.innerHTML = "Новичок 🟢";
+            else if (count < 25) lvlElem.innerHTML = "Монтажёр 🟡";
+            else if (count < 50) lvlElem.innerHTML = "Профи вовсю 🔥";
+            else lvlElem.innerHTML = "Кинорежиссёр высшей лиги 👑";
+        }
+
         function montageClick() {
             frames++;
             document.getElementById("frame-count").innerHTML = frames;
-            let lvlElem = document.getElementById("editor-level");
-            if (frames < 10) lvlElem.innerHTML = "Новичок 🟢";
-            else if (frames < 25) lvlElem.innerHTML = "Монтажёр 🟡";
-            else if (frames < 50) lvlElem.innerHTML = "Профи вовсю 🔥";
-            else lvlElem.innerHTML = "Кинорежиссёр высшей лиги 👑";
+            updateEditorLevel(frames);
+            localStorage.setItem('saved_frames', frames);
         }
 
         function showAchievement(id) {
@@ -882,6 +1189,7 @@
             else if (id === 3) info.innerHTML = "🚀 Разблокировано: Покорили отметку почти в 2000 подписчиков в TikTok!";
         }
 
+        // Добавление комментариев с сохранением
         function addComment() {
             let nameInput = document.getElementById("commenter-name").value.trim();
             let textInput = document.getElementById("commenter-text").value.trim();
@@ -894,10 +1202,15 @@
             newDiv.className = "comment-item";
             newDiv.innerHTML = `<span class="comment-author">${nameInput}:</span> ${textInput}`;
             list.prepend(newDiv);
+            
+            // Сохраняем всю стену комментариев в localStorage
+            localStorage.setItem('saved_comments', list.innerHTML);
+
             document.getElementById("commenter-name").value = "";
             document.getElementById("commenter-text").value = "";
         }
 
+        // Реакции с сохранением
         let counts = { '🔥': 12, '👍': 8, '🤩': 15, '❤️': 22 };
         function react(emoji) {
             counts[emoji]++;
@@ -905,59 +1218,18 @@
             if (emoji === '👍') document.getElementById('cnt-thumb').innerHTML = counts[emoji];
             if (emoji === '🤩') document.getElementById('cnt-wow').innerHTML = counts[emoji];
             if (emoji === '❤️') document.getElementById('cnt-heart').innerHTML = counts[emoji];
+            
+            localStorage.setItem('saved_reactions', JSON.stringify(counts));
         }
 
         function toggleTheme() {
             document.body.classList.toggle("light-theme");
-        }
-
-        function showSecret() {
-            let msg = document.getElementById("secret-msg");
-            msg.style.display = (msg.style.display === "block") ? "none" : "block";
-        }
-
-        function shareSite() {
-            navigator.clipboard.writeText(window.location.href).then(function() {
-                alert("Ссылка на сайт скопирована в буфер обмена! Перешли её друзьям.");
-            });
-        }
-
-        function vote(option) {
-            document.getElementById("poll-result").innerHTML = "Спасибо за голос за вариант: «" + option + "»! Выбор принят! 🔥";
-        }
-
-        const myVideos = [
-            "https://youtu.be/kl95K2X7t9k", "https://youtu.be/6InBdkRmkb8", "https://youtu.be/O2buhvgpqfo",
-            "https://youtu.be/D2-BMg_GrZ0", "https://youtu.be/h0s4uysCPEg", "https://youtu.be/tLG-NGqpOoE",
-            "https://youtu.be/MiZN_2TLflg", "https://youtu.be/eLiN5Zp72tk", "https://youtu.be/CS86TkBs5Q4",
-            "https://youtu.be/kSmoBzCtYBk", "https://youtu.be/AO-XBPAJvWI", "https://youtu.be/iEe8R-nB_Zc"
-        ];
-
-        const myShorts = [
-            "https://youtube.com/shorts/EuprlrOMFkg", "https://youtube.com/shorts/GIdSZ29BUvw",
-            "https://youtube.com/shorts/enBsYk3EfcY", "https://youtube.com/shorts/vxTOYYEGJgw",
-            "https://youtube.com/shorts/DDRStaGL93c", "https://youtube.com/shorts/_5_8GOCSeNs"
-        ];
-
-        function openRandomVideo() {
-            window.open(myVideos[Math.floor(Math.random() * myVideos.length)], "_blank");
-        }
-
-        function openRandomShorts() {
-            window.open(myShorts[Math.floor(Math.random() * myShorts.length)], "_blank");
+            if (document.body.classList.contains("light-theme")) {
+                localStorage.setItem('saved_theme', 'light');
+            } else {
+                localStorage.setItem('saved_theme', 'dark');
+            }
         }
     </script>
 </body>
-</html><div class="music-section">
-        <h3>🎵 Фоновый вайб (Instasamka)</h3>
-        <p>Включи музыку для полного погружения в атмосферу влога!</p>
-        <button class="interactive-btn music-btn" id="music-toggle-btn" onclick="toggleMusic()">▶ Включить трек</button>
-        <div id="audio-container" style="display: none;">
-            <iframe width="0" height="0" src="https://www.youtube.com/embed/328m07x3g_I?autoplay=1&loop=1&playlist=328m07x3g_I" title="Instasamka Background Music" allow="autoplay"></iframe>
-        </div>
-    </div><button class="interactive-btn" onclick="toggleMatrixMode()" style="background: #00ff00 !important; color: #000 !important;">💻 Режим хакера</button>
-	<button class="interactive-btn" onclick="toggleMatrixMode()" style="background: #00ff00 !important; color: #000 !important;">💻 Режим хакера</button>
-<audio controls>
-    <source src="zadedengi.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio></body>
+</html>
